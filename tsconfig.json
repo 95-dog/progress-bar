@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+//        "typeRoots": ["./node_modules/@types", "./types"],
+        "module": "esnext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "declaration": true,
+        "target": "es5",
+        "types": ["vite/client"],
+        "noImplicitAny": true,
+        "skipLibCheck": true,
+        "lib": [
+            "es2015",
+            "es2016",
+            "dom",
+            "es2018",
+            "es2020",
+            "es2022"
+        ]
+    }
+}
