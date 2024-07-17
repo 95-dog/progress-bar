@@ -235,7 +235,7 @@ class ProgressBar {
 
     /**
      * 鼠标按下事件
-     * @param event - mouseEvent
+     *
      */
     onMouseup = () => {
         document.removeEventListener('mousemove', this.onMousemove);
