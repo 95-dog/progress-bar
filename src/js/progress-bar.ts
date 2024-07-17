@@ -89,11 +89,11 @@ class ProgressBar {
         })
         this.buildMoveBar();
         this.element.addEventListener('positionChange', this.options.handleProgressChange)
-        this.element.addEventListener('mouseover', (event: MouseEvent) => {
+        this.element.addEventListener('mouseover', () => {
             this.addKeyboardListeners();
             this.showMoveBtn();
         })
-        this.element.addEventListener('mouseout', (event: MouseEvent) => {
+        this.element.addEventListener('mouseout', () => {
             this.removeKeyboardListeners();
             this.hideMovBtn();
         })
@@ -237,7 +237,7 @@ class ProgressBar {
      * 鼠标按下事件
      * @param event - mouseEvent
      */
-    onMouseup = (event: MouseEvent) => {
+    onMouseup = () => {
         document.removeEventListener('mousemove', this.onMousemove);
         document.removeEventListener('mouseup', this.onMouseup)
         this.isDragging = false;
@@ -278,7 +278,7 @@ class ProgressBar {
                 mousePosition: number = client - eleRect[eleRectValue],
                 btnRadius: number = this.moveBtn.offsetWidth / 2,
                 btnPosition: number, barPosition: number,
-                barPercentage: number, btnPercentage: number;
+                barPercentage: number;
             let stepSize: number = eleRect[eleRectStyleValue] * (this.options.step / 100);
             if (this.horizontal) {
                 barPosition = Math.round(Math.max(0, Math.min(mousePosition, eleRect[eleRectStyleValue])) / stepSize) * stepSize;
