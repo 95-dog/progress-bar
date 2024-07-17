@@ -8,16 +8,22 @@
     <title>Document</title>
 </head>
 <body>
+<div class="volume-progress" style="width: 50%;margin: auto" data-dog-progress-size="10px" data-dog-progress-percentage="0.6">
 
-<div class="volume-progress">
+</div>
+
+<div class="volume-progress" data-dog-progress-horizontal="false">
 
 </div>
 
 </body>
 
-<script>
+<script type="module">
     import progressBar from "./src/js/progress-bar";
+
     let progressBars = document.querySelectorAll('.volume-progress');
-    progressBars.forEach(item => new progressBar(item))
+    progressBars.forEach(item => new progressBar(item, {
+
+    }))
 </script>
 </html>

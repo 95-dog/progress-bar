@@ -4,21 +4,21 @@ export default defineConfig({
     server: {
         open: 'http://progress-bar.test',
     },
-
+    publicDir: false,
     build: {
         outDir: 'dist',
         sourcemap: false,
-        minify: "terser",
-        terserOptions: {
-            // 清除console和debugger
-            compress: {
-                // drop_console: true,
-                // drop_debugger: true,
-            },
-            format: {
-                comments: false,
-            },
-        },
+        minify: "esbuild",
+        // terserOptions: {
+        //     // 清除console和debugger
+        //     compress: {
+        //         // drop_console: true,
+        //         // drop_debugger: true,
+        //     },
+        //     format: {
+        //         comments: false,
+        //     },
+        // },
         rollupOptions: {
             //laravel input: 已定义
             // input: ['resources/home/js/index.ts'],

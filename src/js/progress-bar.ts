@@ -18,9 +18,22 @@ const ElementClass: string = 'dog-progress';
 const MoveBarClass: string = 'move-bar';
 const MoveBtnClass: string = 'move-btn';
 
+export interface ProgressBarOptions {
+    height?: string,
+    width?: string,
+    moveBtnPercentage?: number,
+    moveBtnRadius?: string,
+    horizontal?: boolean,
+    step?: number
+    handleProgressChange?: HandleProgressChange,
+
+}
+
+
 class ProgressBar {
     options: ProgressBarOptions = {
         height: '10px',
+        width: '100%',
         horizontal: true,
         //0-1
         moveBtnPercentage: 0,
@@ -34,11 +47,12 @@ class ProgressBar {
          */
         handleProgressChange: (event: ProgressCustomEvent) => {}
     }
-    element: Element|HTMLElement;
+    element: Element;
     moveBar: HTMLElement;
     moveBtn: HTMLElement;
     isDragging: boolean = false;
     horizontal: boolean;
+    moveBtnSelect: boolean = false;
 
     /**
      * 创建一个 ProgressBar 实例
@@ -49,7 +63,7 @@ class ProgressBar {
      *    let progressBars = document.querySelectorAll('.volume-progress');
      *     progressBars.forEach(item => new progressBar(item))
      */
-    constructor(element: Element|HTMLElement, options?: ProgressBarOptions) {
+    constructor(element: Element, options?: ProgressBarOptions) {
         if (!element) {
             console.error(`Element is "${element}"`);
             return;
@@ -61,7 +75,7 @@ class ProgressBar {
             throw Error('step 的值只能为0-100之间的整数');
         }
         this.horizontal = this.options.horizontal;
-        let dataHorizontal: string = element.getAttribute('data-dog-horizontal');
+        let dataHorizontal: string = element.getAttribute('data-dogProgress-horizontal');
         if (dataHorizontal) {
             if (dataHorizontal === 'true') this.horizontal = true;
             if (dataHorizontal === 'false') this.horizontal = false;
@@ -74,26 +88,24 @@ class ProgressBar {
      */
     init = () => {
         this.element.classList.add(ElementClass);
-        let styleValue: any = 'height';
         if (!this.horizontal) {
             this.element.classList.add('progress-vertical')
-            styleValue = 'width';
         }
 
         let _element: HTMLElement = this.element as HTMLElement;
-        _element.style[styleValue] = this.options.height;
-        // this.progressAndMoveBtnHeightCheck(_element);
+        _element.style.height = this.element.getAttribute('data-dogProgress-height') ?? this.options.height;
+        _element.style.width = this.element.getAttribute('data-dogProgress-width') ?? this.options.width;
         _element.style.borderRadius = (this.element.clientHeight / 2) + 'px';
         _element.addEventListener('click', (event: MouseEvent) => {
             this.updateMoveBarWidthAndMoveBtnLeft(this.horizontal ? event.clientX : event.clientY);
         })
         this.buildMoveBar();
         this.element.addEventListener('positionChange', this.options.handleProgressChange)
-        this.element.addEventListener('mouseover', () => {
+        this.element.addEventListener('mouseover', (event: MouseEvent) => {
             this.addKeyboardListeners();
             this.showMoveBtn();
         })
-        this.element.addEventListener('mouseout', () => {
+        this.element.addEventListener('mouseout', (event: MouseEvent) => {
             this.removeKeyboardListeners();
             this.hideMovBtn();
         })
@@ -160,23 +172,11 @@ class ProgressBar {
      * 隐藏moveBtn按钮
      */
     hideMovBtn = () => {
+        if (this.moveBtnSelect) return;
         this.moveBtn.style.visibility = 'hidden';
         this.moveBtn.style.opacity = '0';
     }
 
-
-    // /**
-    //  * 检查progress和moveBtn的宽高设置是否正确
-    //  * @param ele - HTMLElement
-    //  */
-    // progressAndMoveBtnHeightCheck = (ele: HTMLElement) => {
-    //     if (ele.offsetHeight === 0) {
-    //         throw Error(ele.classList[0] + '当前progress高度为0');
-    //     }
-    //     if (!ele.style.height) {
-    //         throw Error(ele.classList[0] + 'options.height 格式错误');
-    //     }
-    // }
 
     /**
      * 绑定当bar发生变动时触发事件
@@ -199,13 +199,14 @@ class ProgressBar {
      */
     buildMoveBar = () => {
         let moveBar: HTMLElement = document.createElement('div'),
-            styleValue: any = this.horizontal ? 'width' : 'height';
+            styleValue: any = this.horizontal ? 'width' : 'height',
+            percentageValue:number = +this.element.getAttribute('data-dogProgress-value') || this.options.moveBtnPercentage
         moveBar.classList.add(MoveBarClass);
-        if (this.options.moveBtnPercentage) {
-            if (this.options.moveBtnPercentage < 0 || this.options.moveBtnPercentage > 1) {
+        if (percentageValue) {
+            if (percentageValue < 0 || percentageValue > 1) {
                 throw new Error('moveBtnPercentage的值为0-1之间');
             }
-            moveBar.style[styleValue] = `${this.options.moveBtnPercentage * 100}%`;
+            moveBar.style[styleValue] = `${percentageValue * 100}%`;
         }
         moveBar.style.borderRadius = (this.element.clientHeight / 2) + 'px';
         this.element.append(moveBar);
@@ -223,11 +224,11 @@ class ProgressBar {
         moveBtn.style.height = this.options.moveBtnRadius;
         moveBtn.style.width = this.options.moveBtnRadius;
         this.moveBar.append(moveBtn);
-        // this.progressAndMoveBtnHeightCheck(moveBtn);
         moveBtn.style[positionValue] = `-${moveBtn.offsetWidth / 2}px`;
         this.moveBtn = moveBtn;
         this.moveBtn.addEventListener('mousedown', () => {
             this.isDragging = true;
+            this.moveBtnSelect = true;
             document.addEventListener('mousemove', this.onMousemove)
             document.addEventListener('mouseup', this.onMouseup)
         })
@@ -235,12 +236,14 @@ class ProgressBar {
 
     /**
      * 鼠标按下事件
-     *
+     * @param event - mouseEvent
      */
-    onMouseup = () => {
+    onMouseup = (event: MouseEvent) => {
         document.removeEventListener('mousemove', this.onMousemove);
         document.removeEventListener('mouseup', this.onMouseup)
         this.isDragging = false;
+        this.moveBtnSelect = false;
+        this.hideMovBtn();
         this.setUserSelect('');
     }
 
@@ -278,7 +281,7 @@ class ProgressBar {
                 mousePosition: number = client - eleRect[eleRectValue],
                 btnRadius: number = this.moveBtn.offsetWidth / 2,
                 btnPosition: number, barPosition: number,
-                barPercentage: number;
+                barPercentage: number, btnPercentage: number;
             let stepSize: number = eleRect[eleRectStyleValue] * (this.options.step / 100);
             if (this.horizontal) {
                 barPosition = Math.round(Math.max(0, Math.min(mousePosition, eleRect[eleRectStyleValue])) / stepSize) * stepSize;
@@ -311,14 +314,6 @@ class ProgressBar {
     }
 }
 
-export interface ProgressBarOptions {
-    height?: string,
-    moveBtnPercentage?: number,
-    moveBtnRadius?: string,
-    horizontal?: boolean,
-    handleProgressChange?: HandleProgressChange,
-    step?: number
-}
 
 type ProgressEvent = {
     percentage: number
