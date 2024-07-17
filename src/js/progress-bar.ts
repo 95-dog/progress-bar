@@ -34,7 +34,7 @@ class ProgressBar {
          */
         handleProgressChange: (event: ProgressCustomEvent) => {}
     }
-    element: Element;
+    element: Element|HTMLElement;
     moveBar: HTMLElement;
     moveBtn: HTMLElement;
     isDragging: boolean = false;
@@ -49,7 +49,7 @@ class ProgressBar {
      *    let progressBars = document.querySelectorAll('.volume-progress');
      *     progressBars.forEach(item => new progressBar(item))
      */
-    constructor(element: Element, options?: ProgressBarOptions) {
+    constructor(element: Element|HTMLElement, options?: ProgressBarOptions) {
         if (!element) {
             console.error(`Element is "${element}"`);
             return;
