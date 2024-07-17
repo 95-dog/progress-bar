@@ -1,0 +1,42 @@
+.dog-progress {
+    position: relative;
+    width: 100%;
+    box-shadow: 0 0 2px 0 #8f8f8f;
+    background-color: #ffffff;
+
+    .move-bar {
+        top: 0;
+        height: 100%;
+        position: absolute;
+        background-color: red;
+        //transition: width .1s ease;
+
+        .move-btn {
+            position: absolute;
+            border-radius: 100%;
+            background-color: red;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 3;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+    }
+
+    &.progress-vertical {
+        height: 500px;
+
+        .move-bar {
+            bottom: 0;
+            top: unset;
+            width: 100%;
+
+            .move-btn {
+                top: unset;
+                left: 50%;
+                transform: translatex(-50%);
+            }
+        }
+    }
+}
