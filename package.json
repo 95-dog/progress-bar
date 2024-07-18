@@ -6,8 +6,7 @@
   "author": "95-dog <1471869592@qq.com>",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "preview" : "vite preview"
+    "dev": "vite"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
