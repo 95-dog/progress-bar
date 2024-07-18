@@ -6,19 +6,59 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        .container {
+            width: 1120px;
+            margin: auto;
+        }
+
+        .box {
+            width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        .box .value {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .volume-progress {
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
-<div>
-    <div class="test">
+<div class="container">
+    <div class="box">
+        <div class="value">
+            <span class="percentage">60</span>%
+        </div>
+        <div class="volume-progress" style="width: 50%;margin: auto" data-dogProgress-height="10px"
+             data-dogProgress-value="0.6">
+        </div>
+    </div>
 
+    <div class="box">
+        <div class="value">
+            <span class="percentage">0</span>%
+        </div>
+        <div class="volume-progress" data-dogProgress-horizontal="false" data-dogProgress-width="10px"
+             data-dogProgress-height="400px">
+        </div>
     </div>
 </div>
 
+</body>
 <script type="module">
     import DogProgressBar from "./src/js/dogProgress-bar";
     import "./src/css/progress-bar.scss";
-
-    let a = new DogProgressBar(document.querySelector('.test'))
+    let elements = document.querySelectorAll('.volume-progress');
+    elements.forEach((item) => {
+        new DogProgressBar(item, {
+            handleProgressChange: (event) => {
+                item.parentElement.querySelector('.value .percentage').textContent = `${Math.round(event.detail.percentage * 100)}`;
+            }
+        })
+    })
 </script>
-</body>
 </html>
