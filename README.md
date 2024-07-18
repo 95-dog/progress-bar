@@ -11,6 +11,7 @@
 
 ~~~
 import DogProgressBar, { ProgressBarOptions } from 'dog-progress-bar';
+import "../css/progress-bar"
 
 const progressBarElement = document.querySelector('.volume-progress');
 const options: ProgressBarOptions = {
@@ -31,6 +32,7 @@ new DogProgressBar(progressBarElement, options);
 or
 
 ~~~
+<link rel="stylesheet" crossorigin href="/dist/css/progress-bar.css">
 <script src='/dist/js/dogProgress-bar.js'></script>
 
 const progressBarElement = document.querySelectorAll('.volume-progress');
