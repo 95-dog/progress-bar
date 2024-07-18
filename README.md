@@ -28,7 +28,7 @@ const options: ProgressBarOptions = {
 new DogProgressBar(progressBarElement, options);
 ~~~
 
-### or
+or
 
 ~~~
 <script src='/dist/js/dogProgress-bar.js'></script>
@@ -121,6 +121,7 @@ progressBarElement.forEach((item) => {
 设置用户选中状态，避免拖动过程中触发选中。
 
 ### 自定义事件
+
 `positionChange`
 
 当进度条位置发生改变时触发。事件对象包含以下属性：
