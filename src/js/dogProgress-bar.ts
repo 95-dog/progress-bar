@@ -24,7 +24,6 @@ export interface ProgressBarOptions {
     horizontal?: boolean,
     step?: number
     handleProgressChange?: HandleProgressChange,
-
 }
 
 
