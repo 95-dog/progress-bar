@@ -133,10 +133,12 @@ class DogProgressBar {
          */
         this.bindPositionChange = () => {
             let rectValue = this.horizontal ? 'width' : 'height';
+            console.log((this.moveBar.getBoundingClientRect()[rectValue] /
+                this.element.getBoundingClientRect()[rectValue]).toFixed(2));
             let changeEvent = new CustomEvent('positionChange', {
                 detail: {
-                    percentage: parseFloat((this.moveBar.getBoundingClientRect()[rectValue] /
-                        this.element.getBoundingClientRect()[rectValue]).toFixed(2)),
+                    percentage: +(this.moveBar.getBoundingClientRect()[rectValue] /
+                        this.element.getBoundingClientRect()[rectValue]).toFixed(2),
                 }
             });
             // 触发 change 事件

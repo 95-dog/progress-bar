@@ -8,23 +8,59 @@
     <title>Document</title>
 
     <link rel="stylesheet" crossorigin href="./css/progress-bar.css">
+    <style>
+        .container {
+            width: 1120px;
+            margin: auto;
+        }
+
+        .box {
+            width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        .box .value {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .volume-progress {
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
-<div class="volume-progress" style="width: 50%;margin: auto" data-dogProgress-height="10px"
-     data-dogProgress-value="0.6">
+<div class="container">
+    <div class="box">
+        <div class="value">
+            <span class="percentage">60</span>%
+        </div>
+        <div class="volume-progress" style="width: 50%;margin: auto" data-dogProgress-height="10px"
+             data-dogProgress-value="0.6">
+        </div>
+    </div>
 
-</div>
-
-<div class="volume-progress" data-dogProgress-horizontal="false" data-dogProgress-width="10px" data-dogProgress-height="400px">
-
+    <div class="box">
+        <div class="value">
+            <span class="percentage">0</span>%
+        </div>
+        <div class="volume-progress" data-dogProgress-horizontal="false" data-dogProgress-width="10px"
+             data-dogProgress-height="400px">
+        </div>
+    </div>
 </div>
 
 </body>
 <script crossorigin src="./js/dogProgress-bar.js"></script>
 <script>
     let elements = document.querySelectorAll('.volume-progress');
-    elements.forEach((item)=> {
-        new DogProgress(item)
+    elements.forEach((item) => {
+        new DogProgress(item, {
+            handleProgressChange: (event) => {
+                console.log(event.detail.percentage)
+                item.parentElement.querySelector('.value .percentage').textContent = `${Math.round(event.detail.percentage * 100)}`;
+            }
+        })
     })
 </script>
 </html>

@@ -179,9 +179,9 @@ class DogProgressBar {
         let rectValue: keyof DOMRect = this.horizontal ? 'width' : 'height';
         let changeEvent: ProgressCustomEvent = new CustomEvent('positionChange', {
             detail: {
-                percentage: parseFloat((this.moveBar.getBoundingClientRect()[rectValue] /
+                percentage: +(this.moveBar.getBoundingClientRect()[rectValue] /
                     this.element.getBoundingClientRect()[rectValue]
-                ).toFixed(2)),
+                ).toFixed(2),
             }
         });
         // 触发 change 事件
