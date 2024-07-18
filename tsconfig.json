@@ -1,13 +1,13 @@
 {
     "include": ["./**/*"],
     "compilerOptions": {
-        "module": "esnext",
-        "moduleResolution": "node",
+        "outDir": "dist/js",
+        "module": "ES2020",
+        "moduleResolution": "Bundler",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "declaration": true,
-        "target": "es5",
-        "types": ["vite/client"],
+        "target": "ES2020",
         "noImplicitAny": true,
         "skipLibCheck": true,
         "lib": [

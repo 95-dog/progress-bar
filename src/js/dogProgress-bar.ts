@@ -12,8 +12,6 @@
  * ############################################
  */
 
-import '../css/progress-bar.scss';
-
 const ElementClass: string = 'dog-progress';
 const MoveBarClass: string = 'move-bar';
 const MoveBtnClass: string = 'move-btn';
@@ -30,7 +28,7 @@ export interface ProgressBarOptions {
 }
 
 
-class ProgressBar {
+class DogProgressBar {
     options: ProgressBarOptions = {
         height: '10px',
         width: '100%',
@@ -70,10 +68,6 @@ class ProgressBar {
         }
         this.element = element;
         this.options = Object.assign({}, this.options, options);
-        this.options.step = +this.options.step.toFixed(0);
-        if (this.options.step < 0 || this.options.step > 100) {
-            throw Error('step 的值只能为0-100之间的整数');
-        }
         this.horizontal = this.options.horizontal;
         let dataHorizontal: string = element.getAttribute('data-dogProgress-horizontal');
         if (dataHorizontal) {
@@ -200,9 +194,9 @@ class ProgressBar {
     buildMoveBar = () => {
         let moveBar: HTMLElement = document.createElement('div'),
             styleValue: any = this.horizontal ? 'width' : 'height',
-            percentageValue:number = +this.element.getAttribute('data-dogProgress-value') || this.options.moveBtnPercentage
+            percentageValue: number = +this.element.getAttribute('data-dogProgress-value') || this.options.moveBtnPercentage
         moveBar.classList.add(MoveBarClass);
-        if (percentageValue) {
+        if (typeof percentageValue === 'number') {
             if (percentageValue < 0 || percentageValue > 1) {
                 throw new Error('moveBtnPercentage的值为0-1之间');
             }
@@ -279,18 +273,16 @@ class ProgressBar {
         requestAnimationFrame(() => {
             let eleRect: DOMRect = this.element.getBoundingClientRect(),
                 mousePosition: number = client - eleRect[eleRectValue],
-                btnRadius: number = this.moveBtn.offsetWidth / 2,
                 btnPosition: number, barPosition: number,
                 barPercentage: number, btnPercentage: number;
             let stepSize: number = eleRect[eleRectStyleValue] * (this.options.step / 100);
             if (this.horizontal) {
-                barPosition = Math.round(Math.max(0, Math.min(mousePosition, eleRect[eleRectStyleValue])) / stepSize) * stepSize;
-                barPercentage = (barPosition / eleRect.width) * 100;
-                btnPosition = -btnRadius;
+                barPosition = Math.max(0, Math.min(mousePosition, eleRect[eleRectStyleValue]));
+                barPercentage = Math.min(100, (barPosition / eleRect.width) * 100);
+                btnPosition = 0;
                 if (barPosition < this.moveBtn.getBoundingClientRect().width) {
                     btnPosition = -(this.moveBtn.getBoundingClientRect().width - (+barPosition.toFixed(0)));
                 }
-                // btnPosition = Math.max(0, Math.min(barPosition - btnRadius * 2, eleRect[eleRectStyleValue] - btnRadius * 2));
             } else {
                 barPosition = Math.round(Math.max(0, Math.min(eleRect[eleRectStyleValue] - mousePosition, eleRect[eleRectStyleValue])) / stepSize) * stepSize;
                 barPercentage = (barPosition / eleRect.height) * 100;
@@ -322,4 +314,4 @@ export type ProgressCustomEvent = CustomEvent<ProgressEvent>;
 
 type HandleProgressChange = (event: ProgressCustomEvent) => void;
 
-export default ProgressBar;
+export default DogProgressBar;
