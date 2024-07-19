@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.DogProgress = factory());
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.DogProgressBar = factory());
 })(this, (function () { 'use strict';
 
     /**
@@ -139,8 +139,6 @@
              */
             this.bindPositionChange = () => {
                 let rectValue = this.horizontal ? 'width' : 'height';
-                console.log((this.moveBar.getBoundingClientRect()[rectValue] /
-                    this.element.getBoundingClientRect()[rectValue]).toFixed(2));
                 let changeEvent = new CustomEvent('positionChange', {
                     detail: {
                         percentage: +(this.moveBar.getBoundingClientRect()[rectValue] /
@@ -277,4 +275,4 @@
     return DogProgressBar;
 
 }));
-//# sourceMappingURL=dogProgress-bar.js.map
+//# sourceMappingURL=dogProgress-bar.umd.js.map

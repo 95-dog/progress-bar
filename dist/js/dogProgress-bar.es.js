@@ -133,8 +133,6 @@ class DogProgressBar {
          */
         this.bindPositionChange = () => {
             let rectValue = this.horizontal ? 'width' : 'height';
-            console.log((this.moveBar.getBoundingClientRect()[rectValue] /
-                this.element.getBoundingClientRect()[rectValue]).toFixed(2));
             let changeEvent = new CustomEvent('positionChange', {
                 detail: {
                     percentage: +(this.moveBar.getBoundingClientRect()[rectValue] /
@@ -269,4 +267,4 @@ class DogProgressBar {
 }
 
 export { DogProgressBar as default };
-//# sourceMappingURL=dogProgress-bar.esm.js.map
+//# sourceMappingURL=dogProgress-bar.es.js.map

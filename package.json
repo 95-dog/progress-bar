@@ -1,20 +1,13 @@
 {
-  "name": "progress-bar",
-  "type": "module",
+  "name": "dogg-progress-bar",
   "version": "1.0.0",
-  "description": "",
-  "author": "95-dog <1471869592@qq.com>",
-  "private": true,
-  "scripts": {
-    "dev": "vite"
+  "description": "一个简单的进度条",
+  "types": "dogProgress-bar.d.ts",
+  "module": "dist/js/dogProgress-bar.es.js",
+  "main": "dist/js/dogProgress-bar.cjs.js",
+  "author": {
+    "name": "dog-95",
+    "email": "yanyuahong@gmail.com"
   },
-  "devDependencies": {
-    "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^11.1.6",
-    "sass": "^1.77.8",
-    "terser": "^5.31.3",
-    "tslib": "^2.6.3",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.4"
-  }
+  "private": true
 }
