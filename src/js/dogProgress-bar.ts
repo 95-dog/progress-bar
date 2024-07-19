@@ -11,6 +11,7 @@
  *
  * ############################################
  */
+import '../css/progress-bar.scss';
 
 const ElementClass: string = 'dog-progress';
 const MoveBarClass: string = 'move-bar';

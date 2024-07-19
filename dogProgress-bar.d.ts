@@ -11,6 +11,7 @@
  *
  * ############################################
  */
+import '../css/progress-bar.scss';
 export interface ProgressBarOptions {
     height?: string;
     width?: string;
