@@ -2,9 +2,14 @@
   "name": "dogg-progress-bar",
   "version": "1.0.0",
   "description": "一个简单的进度条",
-  "types": "dogProgress-bar.d.ts",
-  "module": "dist/js/dogProgress-bar.es.js",
-  "main": "dist/js/dogProgress-bar.cjs.js",
+  "types": "./dogProgress-bar.d.ts",
+  "module": "./dist/js/dogProgress-bar.es.js",
+  "main": "./dist/js/dogProgress-bar.umd.js",
+  "exports": {
+    "types": "./dogProgress-bar.d.ts",
+    "import": "./dist/js/dogProgress-bar.es.js",
+    "require": "./dist/js/dogProgress-bar.umd.js"
+  },
   "author": {
     "name": "dog-95",
     "email": "yanyuahong@gmail.com"
