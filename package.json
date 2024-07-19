@@ -1,5 +1,5 @@
 {
-  "name": "dogg-progress-bar",
+  "name": "dog-progress-bar",
   "version": "1.0.0",
   "description": "一个简单的进度条",
   "types": "./dogProgress-bar.d.ts",
