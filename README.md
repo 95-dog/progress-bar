@@ -10,7 +10,7 @@
 ### 示例
 
 ~~~
-import DogProgressBar, { ProgressBarOptions } from 'dog-progress-bar';
+import DogProgressBar, { ProgressBarOptions } from '/dist/js/dog-progress-bar.es';
 import "../css/progress-bar"
 
 const progressBarElement = document.querySelector('.volume-progress');
@@ -33,7 +33,7 @@ or
 
 ~~~
 <link rel="stylesheet" crossorigin href="/dist/css/progress-bar.css">
-<script src='/dist/js/dogProgress-bar.js'></script>
+<script src='/dist/js/dogProgress-bar.umd.js'></script>
 
 const progressBarElement = document.querySelectorAll('.volume-progress');
 const options = {
@@ -48,7 +48,7 @@ const options = {
     }
 };
 progressBarElement.forEach((item) => {
-       new DogProgress(item, options)
+       new DogProgressBar(item, options)
    })
 ~~~
 
