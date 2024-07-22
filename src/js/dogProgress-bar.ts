@@ -370,14 +370,14 @@ class DogProgressBar {
                 moveBtnRect: DOMRect = this.moveBtn.getBoundingClientRect();
             let stepSize: number = eleRect[eleRectStyleValue] * (this.options.step / 100);
             if (this.horizontal) {
-                barPosition = Math.max(0, Math.min(mousePosition, eleRect[eleRectStyleValue]));
+                barPosition = Math.max(0, Math.min(mousePosition, <number>eleRect[eleRectStyleValue]));
                 barPercentage = Math.min(100, (barPosition / eleRect.width) * 100);
                 btnPosition = 0;
                 if (barPosition < moveBtnRect.width) {
                     btnPosition = -(moveBtnRect.width - (+barPosition.toFixed(0)));
                 }
             } else {
-                barPosition = Math.round(Math.max(0, Math.min(eleRect[eleRectStyleValue] - mousePosition, eleRect[eleRectStyleValue])) / stepSize) * stepSize;
+                barPosition = Math.round(Math.max(0, Math.min(eleRect[eleRectStyleValue] - mousePosition, <number>eleRect[eleRectStyleValue])) / stepSize) * stepSize;
                 barPercentage = (barPosition / eleRect.height) * 100;
                 btnPosition = 0;
                 if (mousePosition >= eleRect.height - moveBtnRect.height) {

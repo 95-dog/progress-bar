@@ -73,96 +73,74 @@ progressBarElement.forEach((item) => {
 ## 方法
 
 `init()`
-
 初始化进度条，设置初始样式和事件监听器。
 
 `mobile()`
 判断当前客户单是mobile还是pc并初始化参数
 
 `addKeyboardListeners()`
-
 添加键盘事件监听器，用于键盘导航。
 
 `removeKeyboardListeners()`
-
 移除键盘事件监听器。
 
 `handleKeyboardNavigation(event: KeyboardEvent)`
-
 处理键盘导航事件。
 
 `showMoveBtn()`
-
 显示移动按钮。
 
 `hideMovBtn()`
-
 隐藏移动按钮。
 
 `bindPositionChange()`
-
 绑定进度条位置改变事件，触发自定义事件。
 
 `buildMoveBar()`
-
 构建移动条。
 
 `buildMoveBtn()`
-
 构建移动按钮。
 
 `updateAddEventListenerStart()`
-
 更新事件监听
 
 `addEventListenerStart()`
-
 添加事件监听
 
 `onElementMouseover()`
-
 鼠标移入事件
 
 `onElementMouseout()`
-
 鼠标移出事件
 
 `onTouchstart()`
-
 触摸开始事件
 
 `onTouchmove()`
-
 触摸移动事件
 
 `onTouchend()`
-
 触摸结束事件
 
 `onMousedown()`
-
 鼠标按下事件
 
 `onMouseup(event: MouseEvent)`
-
 处理鼠标松开事件。
 
 `onMousemove(event: MouseEvent)`
-
 处理鼠标移动事件。
 
 `updateMoveBarWidthAndMoveBtnLeft(client: number)`
-
 更新移动条和移动按钮的位置。
 
 `setUserSelect(value: string)`
-
 设置用户选中状态，避免拖动过程中触发选中。
 
 ### 自定义事件
 
 `positionChange`
-
 当进度条位置发生改变时触发。事件对象包含以下属性：
 
 * percentage: 当前进度的百分比（0-1）。
