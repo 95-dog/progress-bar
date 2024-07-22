@@ -10,29 +10,31 @@
 ### 示例
 
 ~~~
-import DogProgressBar, { ProgressBarOptions } from '/dist/js/dog-progress-bar.es';
-import "../css/progress-bar"
+<link rel="stylesheet" href="/dist/css/dogProgress-bar.css">
+<script type="module">
+    import DogProgressBar from '/dist/js/dogProgress-bar.es.js';
 
-const progressBarElement = document.querySelector('.volume-progress');
-const options: ProgressBarOptions = {
-    height: '20px',
-    width: '80%',
-    moveBtnPercentage: 0.5,
-    moveBtnRadius: '10px',
-    horizontal: true,
-    step: 5,
-    handleProgressChange: (event) => {
-        console.log('进度改变：', event.detail.percentage);
-    }
-};
+    const progressBarElement = document.querySelector('.volume-progress');
+    const options = {
+        height: '10px',
+        width: '80%',
+        moveBtnPercentage: 0.5,
+        moveBtnRadius: '15px',
+        horizontal: true,
+        step: 5,
+        handleProgressChange: (event) => {
+            console.log('进度改变：', event.detail.percentage);
+        }
+    };
 
-new DogProgressBar(progressBarElement, options);
+    new DogProgressBar(progressBarElement, options);
+</script>
 ~~~
 
 or
 
 ~~~
-<link rel="stylesheet" crossorigin href="/dist/css/progress-bar.css">
+<link rel="stylesheet" crossorigin href="/dist/css/dogProgress-bar.css">
 <script src='/dist/js/dogProgress-bar.umd.js'></script>
 
 const progressBarElement = document.querySelectorAll('.volume-progress');
