@@ -76,6 +76,9 @@ progressBarElement.forEach((item) => {
 
 初始化进度条，设置初始样式和事件监听器。
 
+`mobile()`
+判断当前客户单是mobile还是pc并初始化参数
+
 `addKeyboardListeners()`
 
 添加键盘事件监听器，用于键盘导航。
@@ -107,6 +110,38 @@ progressBarElement.forEach((item) => {
 `buildMoveBtn()`
 
 构建移动按钮。
+
+`updateAddEventListenerStart()`
+
+更新事件监听
+
+`addEventListenerStart()`
+
+添加事件监听
+
+`onElementMouseover()`
+
+鼠标移入事件
+
+`onElementMouseout()`
+
+鼠标移出事件
+
+`onTouchstart()`
+
+触摸开始事件
+
+`onTouchmove()`
+
+触摸移动事件
+
+`onTouchend()`
+
+触摸结束事件
+
+`onMousedown()`
+
+鼠标按下事件
 
 `onMouseup(event: MouseEvent)`
 
