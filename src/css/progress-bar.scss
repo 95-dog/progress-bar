@@ -1,42 +1,51 @@
 .dog-progress {
-    position: relative;
-    width: 100%;
-    box-shadow: 0 0 2px 0 #8f8f8f;
-    background-color: #ffffff;
+  position: relative;
+  width: 100%;
+  box-shadow: 0 0 2px 0 #8f8f8f;
+  background-color: #ffffff;
+
+  &.isMobile {
+    .move-bar {
+      .move-btn {
+        visibility: unset!important;
+        opacity: 1!important;
+      }
+    }
+  }
+
+  .move-bar {
+    top: 0;
+    height: 100%;
+    position: absolute;
+    background-color: #a5a5a5;
+    //transition: width .1s ease;
+
+    .move-btn {
+      position: absolute;
+      border-radius: 100%;
+      background-color: #8f8f8f;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity .2s ease-in-out, visibility .2s ease-in-out;
+    }
+  }
+
+  &.progress-vertical {
+    height: 500px;
 
     .move-bar {
-        top: 0;
-        height: 100%;
-        position: absolute;
-        background-color: #a5a5a5;
-        //transition: width .1s ease;
+      bottom: 0;
+      top: unset;
+      width: 100%;
 
-        .move-btn {
-            position: absolute;
-            border-radius: 100%;
-            background-color: #8f8f8f;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 3;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity .2s ease-in-out, visibility .2s ease-in-out;
-        }
+      .move-btn {
+        top: unset;
+        left: 50%;
+        transform: translatex(-50%);
+      }
     }
-
-    &.progress-vertical {
-        height: 500px;
-
-        .move-bar {
-            bottom: 0;
-            top: unset;
-            width: 100%;
-
-            .move-btn {
-                top: unset;
-                left: 50%;
-                transform: translatex(-50%);
-            }
-        }
-    }
+  }
 }

@@ -29,6 +29,7 @@ declare class DogProgressBar {
     isDragging: boolean;
     horizontal: boolean;
     moveBtnSelect: boolean;
+    isMobile: boolean;
     /**
      * 创建一个 ProgressBar 实例
      * @param element
@@ -43,6 +44,7 @@ declare class DogProgressBar {
      * 初始化Progress
      */
     init: () => void;
+    mobile: () => void;
     /**
      * 监听键盘事件
      */
@@ -76,11 +78,18 @@ declare class DogProgressBar {
      * 构建MoveBtn
      */
     buildMoveBtn: () => void;
+    updateAddEventListenerStart: () => void;
+    addEventListenerStart: () => void;
+    onElementMouseover: () => void;
+    onElementMouseout: () => void;
+    onTouchstart: () => void;
+    onTouchmove: (event: TouchEvent) => void;
+    onTouchend: () => void;
+    onMousedown: () => void;
     /**
-     * 鼠标按下事件
-     * @param event - mouseEvent
+     * 鼠标抬起事件
      */
-    onMouseup: (event: MouseEvent) => void;
+    onMouseup: () => void;
     /**
      * 鼠标移动事件
      * @param event - MouseEvent

@@ -39,16 +39,17 @@ class DogProgressBar {
             /**
              * 当进度条发生改变时触发事件
              *
-             * @param event
              */
-            handleProgressChange: (event) => { }
+            handleProgressChange: () => { return; }
         };
         this.isDragging = false;
         this.moveBtnSelect = false;
+        this.isMobile = false;
         /**
          * 初始化Progress
          */
         this.init = () => {
+            this.mobile();
             this.element.classList.add(ElementClass);
             if (!this.horizontal) {
                 this.element.classList.add('progress-vertical');
@@ -62,14 +63,19 @@ class DogProgressBar {
             });
             this.buildMoveBar();
             this.element.addEventListener('positionChange', this.options.handleProgressChange);
-            this.element.addEventListener('mouseover', (event) => {
-                this.addKeyboardListeners();
-                this.showMoveBtn();
+            window.addEventListener('resize', () => {
+                this.updateAddEventListenerStart();
             });
-            this.element.addEventListener('mouseout', (event) => {
-                this.removeKeyboardListeners();
-                this.hideMovBtn();
-            });
+        };
+        this.mobile = () => {
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                this.isMobile = true;
+                this.element.classList.add('isMobile');
+            }
+            else {
+                this.isMobile = false;
+                this.element.classList.remove('isMobile');
+            }
         };
         /**
          * 监听键盘事件
@@ -172,18 +178,68 @@ class DogProgressBar {
             this.moveBar.append(moveBtn);
             moveBtn.style[positionValue] = `-${moveBtn.offsetWidth / 2}px`;
             this.moveBtn = moveBtn;
-            this.moveBtn.addEventListener('mousedown', () => {
-                this.isDragging = true;
-                this.moveBtnSelect = true;
-                document.addEventListener('mousemove', this.onMousemove);
-                document.addEventListener('mouseup', this.onMouseup);
-            });
+            this.addEventListenerStart();
+        };
+        this.updateAddEventListenerStart = () => {
+            this.mobile();
+            this.addEventListenerStart();
+        };
+        this.addEventListenerStart = () => {
+            if (this.isMobile) {
+                document.removeEventListener('mousedown', this.onMousedown);
+                document.removeEventListener('mousemove', this.onMousemove);
+                document.removeEventListener('mouseup', this.onMouseup);
+                this.element.removeEventListener('mouseover', this.onElementMouseover);
+                this.element.removeEventListener('mouseout', this.onElementMouseout);
+                this.moveBtn.addEventListener('touchstart', this.onTouchstart, { passive: true });
+            }
+            else {
+                document.removeEventListener('touchstart', this.onTouchstart);
+                document.removeEventListener('touchmove', this.onTouchmove);
+                document.removeEventListener('touchend', this.onTouchend);
+                this.element.addEventListener('mouseover', this.onElementMouseover);
+                this.element.addEventListener('mouseout', this.onElementMouseout);
+                this.moveBtn.addEventListener('mousedown', this.onMousedown);
+            }
+        };
+        this.onElementMouseover = () => {
+            this.addKeyboardListeners();
+            this.showMoveBtn();
+        };
+        this.onElementMouseout = () => {
+            this.removeKeyboardListeners();
+            this.hideMovBtn();
+        };
+        this.onTouchstart = () => {
+            this.isDragging = true;
+            this.moveBtnSelect = true;
+            document.addEventListener('touchmove', this.onTouchmove, { passive: true });
+            document.addEventListener('touchend', this.onTouchend);
+        };
+        this.onTouchmove = (event) => {
+            if (!this.isDragging || !this.element || !this.moveBar || !this.moveBtn)
+                return;
+            let touch = event.touches[0];
+            this.setUserSelect('none');
+            this.updateMoveBarWidthAndMoveBtnLeft(this.horizontal ? touch.clientX : touch.clientY);
+        };
+        this.onTouchend = () => {
+            document.removeEventListener('touchmove', this.onTouchmove);
+            document.removeEventListener('touchend', this.onTouchend);
+            this.isDragging = false;
+            this.moveBtnSelect = false;
+            this.setUserSelect('');
+        };
+        this.onMousedown = () => {
+            this.isDragging = true;
+            this.moveBtnSelect = true;
+            document.addEventListener('mousemove', this.onMousemove);
+            document.addEventListener('mouseup', this.onMouseup);
         };
         /**
-         * 鼠标按下事件
-         * @param event - mouseEvent
+         * 鼠标抬起事件
          */
-        this.onMouseup = (event) => {
+        this.onMouseup = () => {
             document.removeEventListener('mousemove', this.onMousemove);
             document.removeEventListener('mouseup', this.onMouseup);
             this.isDragging = false;
@@ -220,21 +276,21 @@ class DogProgressBar {
                 btnValue = 'top';
             }
             requestAnimationFrame(() => {
-                let eleRect = this.element.getBoundingClientRect(), mousePosition = client - eleRect[eleRectValue], btnPosition, barPosition, barPercentage;
+                let eleRect = this.element.getBoundingClientRect(), mousePosition = client - eleRect[eleRectValue], btnPosition, barPosition, barPercentage, moveBtnRect = this.moveBtn.getBoundingClientRect();
                 let stepSize = eleRect[eleRectStyleValue] * (this.options.step / 100);
                 if (this.horizontal) {
                     barPosition = Math.max(0, Math.min(mousePosition, eleRect[eleRectStyleValue]));
                     barPercentage = Math.min(100, (barPosition / eleRect.width) * 100);
                     btnPosition = 0;
-                    if (barPosition < this.moveBtn.getBoundingClientRect().width) {
-                        btnPosition = -(this.moveBtn.getBoundingClientRect().width - (+barPosition.toFixed(0)));
+                    if (barPosition < moveBtnRect.width) {
+                        btnPosition = -(moveBtnRect.width - (+barPosition.toFixed(0)));
                     }
                 }
                 else {
                     barPosition = Math.round(Math.max(0, Math.min(eleRect[eleRectStyleValue] - mousePosition, eleRect[eleRectStyleValue])) / stepSize) * stepSize;
                     barPercentage = (barPosition / eleRect.height) * 100;
                     btnPosition = 0;
-                    if (mousePosition >= eleRect.height - this.moveBtn.getBoundingClientRect().height) {
+                    if (mousePosition >= eleRect.height - moveBtnRect.height) {
                         btnPosition = Math.max(-this.moveBtn.offsetWidth, barPosition - this.moveBtn.offsetWidth);
                     }
                 }
