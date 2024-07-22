@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo</title>
+    <link rel="stylesheet" crossorigin href="./dist/css/dogProgress-bar.css">
+</head>
+<body>
+<div class="test-progress">
+
+</div>
+
+<script src='./dist/js/dogProgress-bar.umd.js'></script>
+<script>
+    const progressBarElement = document.querySelectorAll('.test-progress');
+    const options = {
+        height: '10px',
+        width: '80%',
+        moveBtnPercentage: 0.5,
+        moveBtnRadius: '15px',
+        horizontal: true,
+        step: 5,
+        handleProgressChange: (event) => {
+            console.log('进度改变：', event.detail.percentage);
+        }
+    };
+    progressBarElement.forEach((item) => {
+        new DogProgressBar(item, options)
+    })
+</script>
+</body>
+</html>

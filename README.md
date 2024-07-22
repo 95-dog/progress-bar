@@ -14,7 +14,7 @@
 <script type="module">
     import DogProgressBar from '/dist/js/dogProgress-bar.es.js';
 
-    const progressBarElement = document.querySelector('.volume-progress');
+    const progressBarElement = document.querySelector('.test-progress');
     const options = {
         height: '10px',
         width: '80%',
@@ -37,12 +37,12 @@ or
 <link rel="stylesheet" crossorigin href="/dist/css/dogProgress-bar.css">
 <script src='/dist/js/dogProgress-bar.umd.js'></script>
 
-const progressBarElement = document.querySelectorAll('.volume-progress');
+const progressBarElement = document.querySelectorAll('.test-progress');
 const options = {
-    height: '20px',
+    height: '10px',
     width: '80%',
     moveBtnPercentage: 0.5,
-    moveBtnRadius: '10px',
+    moveBtnRadius: '15px',
     horizontal: true,
     step: 5,
     handleProgressChange: (event) => {
