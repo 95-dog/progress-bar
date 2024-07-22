@@ -67,6 +67,9 @@ class DogProgressBar {
                 this.updateAddEventListenerStart();
             });
         };
+        /**
+         * 判断当前客户端是否为mobile并设置相关参数
+         */
         this.mobile = () => {
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 this.isMobile = true;
@@ -180,10 +183,17 @@ class DogProgressBar {
             this.moveBtn = moveBtn;
             this.addEventListenerStart();
         };
+        /**
+         * 更新事件监听
+         */
         this.updateAddEventListenerStart = () => {
             this.mobile();
             this.addEventListenerStart();
         };
+        /**
+         * 更具当前客户端来移除和监听事件
+         *
+         */
         this.addEventListenerStart = () => {
             if (this.isMobile) {
                 document.removeEventListener('mousedown', this.onMousedown);
@@ -202,20 +212,33 @@ class DogProgressBar {
                 this.moveBtn.addEventListener('mousedown', this.onMousedown);
             }
         };
+        /**
+         * 鼠标移入progress-bar事件
+         */
         this.onElementMouseover = () => {
             this.addKeyboardListeners();
             this.showMoveBtn();
         };
+        /**
+         * 鼠标移出progress-bar事件
+         */
         this.onElementMouseout = () => {
             this.removeKeyboardListeners();
             this.hideMovBtn();
         };
+        /**
+         * 触摸开始事件
+         */
         this.onTouchstart = () => {
             this.isDragging = true;
             this.moveBtnSelect = true;
             document.addEventListener('touchmove', this.onTouchmove, { passive: true });
             document.addEventListener('touchend', this.onTouchend);
         };
+        /**
+         * 触摸移动事件
+         * @param event
+         */
         this.onTouchmove = (event) => {
             if (!this.isDragging || !this.element || !this.moveBar || !this.moveBtn)
                 return;
@@ -223,6 +246,9 @@ class DogProgressBar {
             this.setUserSelect('none');
             this.updateMoveBarWidthAndMoveBtnLeft(this.horizontal ? touch.clientX : touch.clientY);
         };
+        /**
+         * 触摸结束事件
+         */
         this.onTouchend = () => {
             document.removeEventListener('touchmove', this.onTouchmove);
             document.removeEventListener('touchend', this.onTouchend);
@@ -230,6 +256,9 @@ class DogProgressBar {
             this.moveBtnSelect = false;
             this.setUserSelect('');
         };
+        /**
+         * 鼠标按下事件
+         */
         this.onMousedown = () => {
             this.isDragging = true;
             this.moveBtnSelect = true;

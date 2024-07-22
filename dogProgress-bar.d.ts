@@ -44,6 +44,9 @@ declare class DogProgressBar {
      * 初始化Progress
      */
     init: () => void;
+    /**
+     * 判断当前客户端是否为mobile并设置相关参数
+     */
     mobile: () => void;
     /**
      * 监听键盘事件
@@ -78,13 +81,39 @@ declare class DogProgressBar {
      * 构建MoveBtn
      */
     buildMoveBtn: () => void;
+    /**
+     * 更新事件监听
+     */
     updateAddEventListenerStart: () => void;
+    /**
+     * 更具当前客户端来移除和监听事件
+     *
+     */
     addEventListenerStart: () => void;
+    /**
+     * 鼠标移入progress-bar事件
+     */
     onElementMouseover: () => void;
+    /**
+     * 鼠标移出progress-bar事件
+     */
     onElementMouseout: () => void;
+    /**
+     * 触摸开始事件
+     */
     onTouchstart: () => void;
+    /**
+     * 触摸移动事件
+     * @param event
+     */
     onTouchmove: (event: TouchEvent) => void;
+    /**
+     * 触摸结束事件
+     */
     onTouchend: () => void;
+    /**
+     * 鼠标按下事件
+     */
     onMousedown: () => void;
     /**
      * 鼠标抬起事件

@@ -101,6 +101,9 @@ class DogProgressBar {
         })
     }
 
+    /**
+     * 判断当前客户端是否为mobile并设置相关参数
+     */
     mobile = () => {
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             this.isMobile = true;
@@ -229,11 +232,18 @@ class DogProgressBar {
         this.addEventListenerStart();
     }
 
+    /**
+     * 更新事件监听
+     */
     updateAddEventListenerStart = () => {
         this.mobile();
         this.addEventListenerStart();
     }
 
+    /**
+     * 更具当前客户端来移除和监听事件
+     *
+     */
     addEventListenerStart = () => {
         if (this.isMobile) {
             document.removeEventListener('mousedown', this.onMousedown)
@@ -252,16 +262,25 @@ class DogProgressBar {
         }
     }
 
+    /**
+     * 鼠标移入progress-bar事件
+     */
     onElementMouseover = () => {
         this.addKeyboardListeners();
         this.showMoveBtn();
     }
 
+    /**
+     * 鼠标移出progress-bar事件
+     */
     onElementMouseout = () => {
         this.removeKeyboardListeners();
         this.hideMovBtn();
     }
 
+    /**
+     * 触摸开始事件
+     */
     onTouchstart = () => {
         this.isDragging = true;
         this.moveBtnSelect = true;
@@ -269,12 +288,20 @@ class DogProgressBar {
         document.addEventListener('touchend', this.onTouchend);
     }
 
+    /**
+     * 触摸移动事件
+     * @param event
+     */
     onTouchmove = (event: TouchEvent) => {
         if (!this.isDragging || !this.element || !this.moveBar || !this.moveBtn) return;
         let touch: Touch = event.touches[0];
         this.setUserSelect('none');
         this.updateMoveBarWidthAndMoveBtnLeft(this.horizontal ? touch.clientX : touch.clientY)
     }
+
+    /**
+     * 触摸结束事件
+     */
 
     onTouchend = () => {
         document.removeEventListener('touchmove', this.onTouchmove);
@@ -284,6 +311,9 @@ class DogProgressBar {
         this.setUserSelect('');
     }
 
+    /**
+     * 鼠标按下事件
+     */
     onMousedown = () => {
         this.isDragging = true;
         this.moveBtnSelect = true;
